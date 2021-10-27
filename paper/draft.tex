@@ -51,7 +51,7 @@ An \textit{arbitrage opportunity} is an investment opportunity that is guarantee
 \par 
 An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function, must, at time $t=0$, be equally valuable
 \[\mathcal{V}_{A}(0) = \mathcal{V}_B (0). \]
-This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself.
+This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself. Such a portfolio is known as a \textit{replicating portfolio}.
 \par We now apply the previous corollary to derive a relationship between the prices of a put and call option. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of a European put and call, respectively, both with the same strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
 \[(S(T) - K)^+ -(K-S(T))^+ = S(T)-K.\]
 Now consider a portfolio consisting of a share of the aforementioned stock and a debt of $x$ dollars, so that its initial value is $S(0)-x$ and payoff at time $T$ equal to
@@ -61,9 +61,12 @@ By equating the two payoff functions, we obtain that
 S(T) - x e^{rT} +d(0) e^{r T} = S(T) - K,
 \]
 which implies that $x=K e^{-rT} + d(0)$. With this value for $x$ the two payoffs are equal, and we conclude that the initial values must also be identical, i.e.
-\[ C-P = S(0) - Ke^{-rT} - d_0. \]
+\[ C-P = S(0) - Ke^{-rT} - d(0). \]
 This last equation is called the \textit{put-call parity formula}.
+
+
 \newpage
+\nocite{*}
 \bibliographystyle{plain}
 \bibliography{bibliography} 
 
