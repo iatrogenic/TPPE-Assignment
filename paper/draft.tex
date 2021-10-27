@@ -1,0 +1,71 @@
+\documentclass[]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+
+%custom commands
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+%Probability
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+%opening
+\title{TPPE assignment (DRAFT)}
+\author{Maria Jerónimo Martins \\ Martim Roberto Alves da Costa}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+There is a class of financial instruments, called \textit{derivatives}, whose value is dependent on the value of another security (typically stock), called the \textit{underlying security}, or simply \textit{underlying}. The most well-known example of derivatives are stock options, which split into \textit{call} and \textit{put} options. The former grants the right to purchase the underlying stock at a fixed price $K$, called the \textit{strike price}, at a specified date, called the \textit{expiration date}.\footnote{To be specific, this is a description of an \textit{European} call option.}
+	A put option grants the right to sell the underlying at an agreed upon strike price and expiration date. 
+	\par One of the fundamental problems in mathematical finance is the determination of the \textit{fair value} of such financial instruments. This problem, called the \textit{deriative pricing problem}, is explored in this paper for European options with the purpose of applying the Lebesgue integral.
+
+\section{Pricing an European Option}
+Consider an option with strike price $K$, expiration date $T$, and denote the spot price of the underlying stock at time $t \in [0, T]$ by $S(t)$. Its price at time $t$ will be denoted by $f(S(t))$. In general, when the expiration date arrives, it only makes sense to exercise an option, if and only if, there is a positive return. The \textit{payoff} functions for the buyer of an option are
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		Call      & Put       \\ \hline
+		$(S-K)^+$ & $(K-S)^+$ \\ \hline
+	\end{tabular}
+\end{center}
+
+where $X^+ = \max \{X,0\}$.
+
+\subsection{Arbitrage}
+\par
+An \textit{arbitrage opportunity} is an investment opportunity that is guaranteed not to result in a loss and may (with positive probability) result in a gain. The fact that markets adjust to eliminate arbitrage leads to the fundamental principle of asset pricing: \textit{it only makes sense to price securities under the assumption that there is no arbitrage}. This is called the \textit{no-arbitrage principle}.
+\par 
+An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function, must, at time $t=0$, be equally valuable
+\[\mathcal{V}_{A}(0) = \mathcal{V}_B (0). \]
+This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself.
+\par We now apply the previous corollary to derive a relationship between the prices of a put and call option. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of a European put and call, respectively, both with the same strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
+\[(S(T) - K)^+ -(K-S(T))^+ = S(T)-K.\]
+Now consider a portfolio consisting of a share of the aforementioned stock and a debt of $x$ dollars, so that its initial value is $S(0)-x$ and payoff at time $T$ equal to
+\[  S(T) - x e^{rT} +d(0) e^{r T}. \]
+By equating the two payoff functions, we obtain that
+\[
+S(T) - x e^{rT} +d(0) e^{r T} = S(T) - K,
+\]
+which implies that $x=K e^{-rT} + d(0)$. With this value for $x$ the two payoffs are equal, and we conclude that the initial values must also be identical, i.e.
+\[ C-P = S(0) - Ke^{-rT} - d_0. \]
+This last equation is called the \textit{put-call parity formula}.
+\newpage
+\bibliographystyle{plain}
+\bibliography{bibliography} 
+
+\end{document}
+
