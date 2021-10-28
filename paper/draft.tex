@@ -34,12 +34,12 @@ There is a class of financial instruments, called \textit{derivatives}, whose va
 	\par One of the fundamental problems in mathematical finance is the determination of the \textit{fair value} of such financial instruments. This problem, called the \textit{deriative pricing problem}, is explored in this paper for European options with the purpose of applying the Lebesgue integral.
 
 \section{Pricing an European Option}
-Consider an option with strike price $K$, expiration date $T$, and denote the spot price of the underlying stock at time $t \in [0, T]$ by $S(t)$. Its price at time $t$ will be denoted by $f(S(t))$. In general, when the expiration date arrives, it only makes sense to exercise an option, if and only if, there is a positive return. The \textit{payoff} functions for the buyer of an option are
+Consider an option with strike price $K$, expiration date $T$, and denote the spot price of the underlying stock at time $t \in [0, T]$ by $S(t)$. Its price at time $t$ will be denoted by $f(S(t))$. In general, when the expiration date arrives, it only makes sense to exercise an option, if and only if, there is a positive return. The \textit{payoff} functions, at time $t=T$, for the buyer of an option are
 \begin{center}
 	\begin{tabular}{|c|c|}
 		\hline
 		Call      & Put       \\ \hline
-		$(S-K)^+$ & $(K-S)^+$ \\ \hline
+		$(S(T)-K)^+$ & $(K-S(T))^+$ \\ \hline
 	\end{tabular}
 \end{center}
 
@@ -52,7 +52,7 @@ An \textit{arbitrage opportunity} is an investment opportunity that is guarantee
 An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function, must, at time $t=0$, be equally valuable
 \[\mathcal{V}_{A}(0) = \mathcal{V}_B (0). \]
 This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself. Such a portfolio is known as a \textit{replicating portfolio}.
-\par We now apply the previous corollary to derive a relationship between the prices of a put and call option. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of a European put and call, respectively, both with the same strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
+\par We now apply the previous corollary to derive a relationship between the prices of a put and call option. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of an European put and call, respectively, both with the same strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
 \[(S(T) - K)^+ -(K-S(T))^+ = S(T)-K.\]
 Now consider a portfolio consisting of a share of the aforementioned stock and a debt of $x$ dollars, so that its initial value is $S(0)-x$ and payoff at time $T$ equal to
 \[  S(T) - x e^{rT} +d(0) e^{r T}. \]
@@ -64,11 +64,46 @@ which implies that $x=K e^{-rT} + d(0)$. With this value for $x$ the two payoffs
 \[ C-P = S(0) - Ke^{-rT} - d(0). \]
 This last equation is called the \textit{put-call parity formula}.
 
+\subsection{Connection with the Lebesgue Integral}
+An European stock option can be viewed as a ($\mathcal{F}$-measurable) function of the underlying security $f \circ S : [0,T] \to \RR$, i.e. a random variable on the probability space $(\Omega, \mathcal{F}, \PP)$. Under certain models \cite{capinski2004measure}, we can assert that
+\[
+f(S(0)) = e^{-rT} \EE(f(S(T)))
+\]
+where
+\[
+\EE(f(S(T))) = \int_\Omega f(S(T))  \, \text{d} \PP.
+\]
+Applying this to the put and call considered in the previous section yields
+\begin{gather*}
+	P = e^{-rT} \EE((K - S(T))^+), \\
+	C = e^{-rT} \EE((S(T) - K)^+).
+\end{gather*}
+Suppose the underlying pays no dividends, and thus $d(0)=0$. We can plug the new formulas for $C$ and $P$ into the put-call parity identity, yielding
 
+\begin{align*}
+	S(0) &= C - P + Ke^{-rT} \\
+	&= e^{-rT} \EE((S(T) - K)^+) - e^{-rT} \EE((K - S(T))^+) + Ke^{-rT} \\
+	&= e^{-rT}( \EE((S(T) - K)^+) -  \EE((K - S(T))^+) + K) \\
+	&= e^{-rT}  
+	\left( \int_\Omega (S(T) - K)^+ \, \text{d} \PP
+	- \int_\Omega (K - S(T))^+ \, \text{d}  \PP + K
+	\right ).
+\end{align*}
+If $S(T) < K$, the first integral evaluates to $0$, and similarly for the integral pertaining to the price of the put when $S(T) \geq K$. Thus
+\begin{align*}
+	S(0) &= e^{-rT}
+	\left(
+	\int_{S(T) \geq K} S(T)-K \, \text{d} \PP
+	-
+	\int_{S(T) < K} K - S(T) \, \text{d} \PP + K
+	\right) \\
+	&= e^{-rT} \int_\Omega S(T) \, \text{d}\PP \\
+	&= e^{-rT}\EE(S(T)).
+\end{align*}
+This is a version of a famous result in finance, the \textit{Miller-Modigliani} theorem. Recall that the value of a company is given by the sum of its equity (represented by stock) and debt, i.e. $n S(0) + D$ where $n$ is the number of issued shares and $D$ is the company's debt. 
 \newpage
 \nocite{*}
 \bibliographystyle{plain}
 \bibliography{bibliography} 
-
 \end{document}
 
