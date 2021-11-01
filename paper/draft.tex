@@ -107,13 +107,11 @@ If $S(T) < K$, the first integral evaluates to $0$, and similarly for the integr
 	&= e^{-rT} \int_\Omega S(T) \, \text{d}\PP \\
 	&= e^{-rT}\EE(S(T)).
 \end{align*}
-That $S(0)$ is independent of $K$ implies a version of a famous theorem in finance, called the \textit{Miller-Modigliani theorem}, which states that two companies, identical in all ways except the way they are financed, have the same enterprise value.\cite{capinski2004measure}
-
-%Assume that the company borrows $K^\prime e^{-r_0T^\prime}$ at rate $r_0$ and has to pay back the amount $K^\prime$ at time $T^\prime$. Defaulting on this debt would imply bankruptcy. In such a situation, the stockholders can buy the company back by paying the owed quantity $K^\prime$, but doing so only makes sense if $S(T^\prime) > K^\prime$. The payoff at time $T^\prime$ is identical to that of an European call option, with price $C^\prime$, strike price $K^\prime$ and expiration date $T^\prime$, so 
-%\[
-%C^\prime - P^\prime = S(0) - K^\prime e^{-r_0 T^\prime} .
-%\]
-
+This is a version of a famous theorem in finance, called the \textit{Miller-Modigliani theorem}, which states that two companies, identical in all ways except the way they are financed, have the same enterprise value.\cite{capinski2004measure} To see this, assume the company borrows $K^\prime e^{-rT^\prime}$, at rate $r$,  and has to pay back the amount $K^\prime$ at time $T^\prime$. Defaulting on this debt would imply bankruptcy. In such a situation, the stockholders can buy the company back by paying the owed quantity $K^\prime$, but doing so only makes sense if $S(T^\prime) > K^\prime$. The payoff at time $T^\prime$ is identical to that of an European call option on the company's shares, with strike price $K^\prime$ and expiration date $T^\prime$. Therefore, the put-call parity identity is applicable:
+\[
+ S(0)  = C^\prime - P^\prime + K^\prime e^{-rT^\prime}
+\]
+But as we've seen, the present share price $S(0)$ is independent of $K^\prime$, that is, it is independent of how much is owed by the company. 
 \nocite{*}
 \bibliography{bibliography} 
 \end{document}
