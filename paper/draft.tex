@@ -21,7 +21,10 @@
 \newtheorem*{remark}{Remark}
 
 %opening
-\title{TPPE assignment (DRAFT)}
+\title{%
+	Basics of Option Pricing\\
+	\large with an application of the Lebesgue integral}
+
 \author{Maria Jerónimo Martins \\ Martim Roberto Alves da Costa}
 
 \begin{document}
@@ -44,12 +47,14 @@ Consider an option with strike price $K$, expiration date $T$, and denote the sp
 \end{center}
 
 where $X^+ = \max \{X,0\}$.
+\par 
 
 \subsection{Arbitrage}
+In the discussion that follows, we always assume that a \textit{risk-free asset} is available to the investor, at any quantity. This is an asset that generally increases in value, and the rate at which it increases over any given time interval is known in advance. We also assume a \textit{perfect market}---there are no transaction costs, the lending rate equals the borrowing rate, and that there are no restrictions on short selling---and that it is \textit{frictionless}---all transactions take place immediately.
 \par
 An \textit{arbitrage opportunity} is an investment opportunity that is guaranteed not to result in a loss and may (with positive probability) result in a gain. The fact that markets adjust to eliminate arbitrage leads to the fundamental principle of asset pricing: \textit{it only makes sense to price securities under the assumption that there is no arbitrage}. This is called the \textit{no-arbitrage principle}.
 \par 
-An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function, must, at time $t=0$, be equally valuable
+An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function regardless of the state of the economy, must, at time $t=0$, be equally valuable\cite{roman2013introduction}
 \[\mathcal{V}_{A}(0) = \mathcal{V}_B (0). \]
 This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself. Such a portfolio is known as a \textit{replicating portfolio}.
 \par We now apply the previous corollary to derive a relationship between the prices of a put and call option. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of an European put and call, respectively, both with the same strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
@@ -65,14 +70,16 @@ which implies that $x=K e^{-rT} + d(0)$. With this value for $x$ the two payoffs
 This last equation is called the \textit{put-call parity formula}.
 
 \subsection{Connection with the Lebesgue Integral}
-An European stock option can be viewed as a ($\mathcal{F}$-measurable) function of the underlying security $f \circ S : [0,T] \to \RR$, i.e. a random variable on the probability space $(\Omega, \mathcal{F}, \PP)$. Under certain models \cite{capinski2004measure}, we can assert that
-\[
-f(S(0)) = e^{-rT} \EE(f(S(T)))
-\]
+An European stock option can be modeled as a random variable on the probability space $(\Omega, \mathcal{F}, \PP)$ of the form $Y(T) = f(S(T))$, where the underlying security is described in continuous time $t\in [0,T]$ with prices $S(t)$. Under certain models\cite{capinski2004measure}, we can assert that
+\begin{equation} \label{gprice}
+	Y(0) = e^{-rT} \EE(f(S(T)))
+\end{equation}
+
 where
-\[
-\EE(f(S(T))) = \int_\Omega f(S(T))  \, \text{d} \PP.
-\]
+\begin{align*}
+\EE(f(S(T))) &= \int_\Omega f(S(T))  \, \text{d} \PP \\
+&= \int_{- \infty}^{+ \infty} x \,\text{d} \PP_{f(S(T))}(x).
+\end{align*}
 Applying this to the put and call considered in the previous section yields
 \begin{gather*}
 	P = e^{-rT} \EE((K - S(T))^+), \\
@@ -89,7 +96,7 @@ Suppose the underlying pays no dividends, and thus $d(0)=0$. We can plug the new
 	- \int_\Omega (K - S(T))^+ \, \text{d}  \PP + K
 	\right ).
 \end{align*}
-If $S(T) < K$, the first integral evaluates to $0$, and similarly for the integral pertaining to the price of the put when $S(T) \geq K$. Thus
+If $S(T) < K$, the first integral evaluates to $0$, and similarly for the integral pertaining to the price of the put when $S(T) \geq K$. Note also that these two sets partition $\Omega$. Thus
 \begin{align*}
 	S(0) &= e^{-rT}
 	\left(
@@ -100,10 +107,14 @@ If $S(T) < K$, the first integral evaluates to $0$, and similarly for the integr
 	&= e^{-rT} \int_\Omega S(T) \, \text{d}\PP \\
 	&= e^{-rT}\EE(S(T)).
 \end{align*}
-This is a version of a famous result in finance, the \textit{Miller-Modigliani} theorem. Recall that the value of a company is given by the sum of its equity (represented by stock) and debt, i.e. $n S(0) + D$ where $n$ is the number of issued shares and $D$ is the company's debt. 
-\newpage
+That $S(0)$ is independent of $K$ implies a version of a famous theorem in finance, called the \textit{Miller-Modigliani theorem}, which states that two companies, identical in all ways except the way they are financed, have the same enterprise value.\cite{capinski2004measure}
+
+%Assume that the company borrows $K^\prime e^{-r_0T^\prime}$ at rate $r_0$ and has to pay back the amount $K^\prime$ at time $T^\prime$. Defaulting on this debt would imply bankruptcy. In such a situation, the stockholders can buy the company back by paying the owed quantity $K^\prime$, but doing so only makes sense if $S(T^\prime) > K^\prime$. The payoff at time $T^\prime$ is identical to that of an European call option, with price $C^\prime$, strike price $K^\prime$ and expiration date $T^\prime$, so 
+%\[
+%C^\prime - P^\prime = S(0) - K^\prime e^{-r_0 T^\prime} .
+%\]
+
 \nocite{*}
-\bibliographystyle{plain}
 \bibliography{bibliography} 
 \end{document}
 
