@@ -32,32 +32,38 @@
 \maketitle
 
 \section{Introduction}
-There is a class of financial instruments, called \textit{derivatives}, whose value is dependent on the value of another security (typically stock), called the \textit{underlying security}, or simply \textit{underlying}. The most well-known example of derivatives are stock options, which split into \textit{call} and \textit{put} options. The former grants the right to purchase the underlying stock at a fixed price $K$, called the \textit{strike price}, at a specified date, called the \textit{expiration date}.\footnote{To be specific, this is a description of an \textit{European} call option.}
-	A put option grants the right to sell the underlying at an agreed upon strike price and expiration date. 
+A \textit{derivative} is a contract that derives its value from the performance of another entity, called the \textit{underlying}. The most well-known example of derivatives are stock options, which possess stock as underlying. We will be concerned exclusively with \textit{European} stock options, which split into two classes: \textit{call} and \textit{put} options. The former grants the right to purchase the underlying stock at a fixed price $K$, called the \textit{strike price}, at a specified date, called the \textit{expiration date}.
+	The latter grants the right to sell the underlying at an agreed upon strike price and expiration date. Two options are said to have the same \textit{series} if they share the same underlying, strike price and expiration date.
 	\par One of the fundamental problems in mathematical finance is the determination of the \textit{fair value} of such financial instruments. This problem, called the \textit{deriative pricing problem}, is explored in this paper for European options with the purpose of applying the Lebesgue integral.
 
 \section{Pricing an European Option}
-Consider an option with strike price $K$, expiration date $T$, and denote the spot price of the underlying stock at time $t \in [0, T]$ by $S(t)$. Its price at time $t$ will be denoted by $f(S(t))$. In general, when the expiration date arrives, it only makes sense to exercise an option, if and only if, there is a positive return. The \textit{payoff} functions, at time $t=T$, for the buyer of an option are
-\begin{center}
-	\begin{tabular}{|c|c|}
-		\hline
-		Call      & Put       \\ \hline
-		$(S(T)-K)^+$ & $(K-S(T))^+$ \\ \hline
-	\end{tabular}
-\end{center}
-
-where $X^+ = \max \{X,0\}$.
-\par 
-
+Consider an European call option with strike price $K$, expiration date $T$, and denote the spot price of the underlying stock at time $t \in [0, T]$ by $S(t)$. Its \textit{payoff} at time $t$ will be denoted by $f_c(S(t))$. If $S(T) > K$, the owner of such an option can buy the underlying for $K$ and then sell it for $S(T)$, with payoff $S(T) - K$. On the other hand, if $S(T) \leq K$ there is no reason to exercise the contract, and it is thus worthless. So
+\[
+f_c(S(T)) = 
+\begin{cases}
+S(T) - K &\text{ if } S(T) > K \\
+0 &\text{ otherwise}
+\end{cases}
+= (S(T) - K)^+,
+\]
+where $X^+ = \max\{X, 0 \} $. Similarly, it's only financially rational to exercise an European put option of the same series if $K > S(T)$, so as to sell the underlying for $K$ and pocket the difference $K - S(T)$.  Hence, the payoff function of an European put option is
+\[
+f_p(S(T)) = 
+\begin{cases}
+	K - S(T) &\text{ if } K > S(T) \\
+	0 &\text{ otherwise}
+\end{cases}
+= (K- S(T))^+.
+\]
 \subsection{Arbitrage}
 In the discussion that follows, we always assume that a \textit{risk-free asset} is available to the investor, at any quantity. This is an asset that generally increases in value, and the rate at which it increases over any given time interval is known in advance. We also assume a \textit{perfect market}---there are no transaction costs, the lending rate equals the borrowing rate, and that there are no restrictions on short selling---and that it is \textit{frictionless}---all transactions take place immediately.
 \par
 An \textit{arbitrage opportunity} is an investment opportunity that is guaranteed not to result in a loss and may (with positive probability) result in a gain. The fact that markets adjust to eliminate arbitrage leads to the fundamental principle of asset pricing: \textit{it only makes sense to price securities under the assumption that there is no arbitrage}. This is called the \textit{no-arbitrage principle}.
 \par 
-An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function regardless of the state of the economy, must, at time $t=0$, be equally valuable\cite{roman2013introduction}
+A \textit{portfolio} is a collection of financial instruments. An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function regardless of the state of the economy, must, at time $t=0$, be equally valuable~\cite{roman2013introduction}
 \[\mathcal{V}_{A}(0) = \mathcal{V}_B (0). \]
 This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself. Such a portfolio is known as a \textit{replicating portfolio}.
-\par We now apply the previous corollary to derive a relationship between the prices of a put and call option. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of an European put and call, respectively, both with the same strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
+\par We now apply the previous corollary to derive a famous relationship between the prices of a put and call options. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of an European put and call in the same series, respectively, with strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
 \[(S(T) - K)^+ -(K-S(T))^+ = S(T)-K.\]
 Now consider a portfolio consisting of a share of the aforementioned stock and a debt of $x$ dollars, so that its initial value is $S(0)-x$ and payoff at time $T$ equal to
 \[  S(T) - x e^{rT} +d(0) e^{r T}. \]
@@ -70,7 +76,7 @@ which implies that $x=K e^{-rT} + d(0)$. With this value for $x$ the two payoffs
 This last equation is called the \textit{put-call parity formula}.
 
 \subsection{Connection with the Lebesgue Integral}
-An European stock option can be modeled as a random variable on the probability space $(\Omega, \mathcal{F}, \PP)$ of the form $Y(T) = f(S(T))$, where the underlying security is described in continuous time $t\in [0,T]$ with prices $S(t)$. Under certain models\cite{capinski2004measure}, we can assert that
+An European stock option can be modeled as a random variable on the probability space $(\Omega, \mathcal{F}, \PP)$ of the form $f(S(T))$. For certain specific models consisting of a probability space and random variables representing the stock prices~\cite{capinski2004measure}, we can assert that the price $Y(0)$ of such a security is
 \begin{equation} \label{gprice}
 	Y(0) = e^{-rT} \EE(f(S(T)))
 \end{equation}
@@ -80,12 +86,12 @@ where
 \EE(f(S(T))) &= \int_\Omega f(S(T))  \, \text{d} \PP \\
 &= \int_{- \infty}^{+ \infty} x \,\text{d} \PP_{f(S(T))}(x).
 \end{align*}
-Applying this to the put and call considered in the previous section yields
+In the previous section, we derived the payoff functions for both classes of European options $f_c (x) = (x - K)^+$ and $f_p (x) = (K - x)^+$. Substituting into equation \ref{gprice} yields
 \begin{gather*}
-	P = e^{-rT} \EE((K - S(T))^+), \\
-	C = e^{-rT} \EE((S(T) - K)^+).
+	P = e^{-rT} \EE(f_c(S(T))) =e^{-rT}  \EE((K - S(T))^+), \\
+	C = e^{-rT} \EE(f_p(S(T))) =  e^{-rT} \EE((S(T) - K)^+).
 \end{gather*}
-Suppose the underlying pays no dividends, and thus $d(0)=0$. We can plug the new formulas for $C$ and $P$ into the put-call parity identity, yielding
+Suppose the underlying pays no dividends, and thus $d(0)=0$. We can plug the new expressions for $C$ and $P$ into the put-call parity identity, yielding
 
 \begin{align*}
 	S(0) &= C - P + Ke^{-rT} \\
@@ -105,14 +111,16 @@ If $S(T) < K$, the first integral evaluates to $0$, and similarly for the integr
 	\int_{S(T) < K} K - S(T) \, \text{d} \PP + K
 	\right) \\
 	&= e^{-rT} \int_\Omega S(T) \, \text{d}\PP \\
-	&= e^{-rT}\EE(S(T)).
+	&= e^{-rT}\EE(S(T)),
 \end{align*}
-This is a version of a famous theorem in finance, called the \textit{Miller-Modigliani theorem}, which states that two companies, identical in all ways except the way they are financed, have the same enterprise value.\cite{capinski2004measure} To see this, assume the company borrows $K^\prime e^{-rT^\prime}$, at rate $r$,  and has to pay back the amount $K^\prime$ at time $T^\prime$. Defaulting on this debt would imply bankruptcy. In such a situation, the stockholders can buy the company back by paying the owed quantity $K^\prime$, but doing so only makes sense if $S(T^\prime) > K^\prime$. The payoff at time $T^\prime$ is identical to that of an European call option on the company's shares, with strike price $K^\prime$ and expiration date $T^\prime$. Therefore, the put-call parity identity is applicable:
+and hence $S(0)$ independent of $K$. This is a version of a famous theorem in finance, called the \textit{Miller-Modigliani theorem}, which states that two companies, identical in all ways except the way they are financed, have the same value.~\cite{capinski2004measure} To see this, assume the company borrows $K^\prime e^{-rT^\prime}$, at rate $r$,  and has to pay back the amount $K^\prime$ at time $T^\prime$. Defaulting on this debt would imply bankruptcy. In such a situation, the stockholders can buy the company back by paying the owed quantity $K^\prime$, but doing so only makes sense if $S(T^\prime) > K^\prime$. The payoff at time $T^\prime$ is identical to that of an European call option on the company's shares, with strike price $K^\prime$ and expiration date $T^\prime$. Therefore, the put-call parity identity is applicable:
 \[
  S(0)  = C^\prime - P^\prime + K^\prime e^{-rT^\prime}
 \]
 But as we've seen, the present share price $S(0)$ is independent of $K^\prime$, that is, it is independent of how much is owed by the company. 
+
 \nocite{*}
+\bibliographystyle{unsrt}
 \bibliography{bibliography} 
 \end{document}
 
