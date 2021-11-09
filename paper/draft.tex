@@ -63,7 +63,7 @@ An \textit{arbitrage opportunity} is an investment opportunity that is guarantee
 A \textit{portfolio} is a collection of financial instruments. An elementary implication of this principle is that two portfolios, $A$ and $B$, with the same payoff function regardless of the state of the economy, must, at time $t=0$, be equally valuable~\cite{roman2013introduction}
 \[\mathcal{V}_{A}(0) = \mathcal{V}_B (0). \]
 This means that if we construct a portfolio whose initial value is known and whose payoff function equals that of our European option, then we can consequently also price the option itself. Such a portfolio is known as a \textit{replicating portfolio}.
-\par We now apply the previous corollary to derive a famous relationship between the prices of a put and call options. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of an European put and call in the same series, respectively, with strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. A portfolio consisting of a put and a call will have initial value equal to $C-P$ and a payoff at time $T$ equal to
+\par We now apply the previous corollary to derive a famous relationship between the prices of a put and call options. Suppose that a stock is currently selling at a price of $S(0)$ per share. Let $P$ and $C$ denote the price of an European put and call in the same series, respectively, with strike price $K$ and expiration date $T$. Let also $d(0)$ represent the present value of any dividends paid by the stock during the period in question and $r$ denote the risk-free rate. Suppose we construct a portfolio by writing a put and buying a call of this series. The portfolio will have initial value equal to $C-P$ and a payoff at time $T$ equal to
 \[(S(T) - K)^+ -(K-S(T))^+ = S(T)-K.\]
 Now consider a portfolio consisting of a share of the aforementioned stock and a debt of $x$ dollars, so that its initial value is $S(0)-x$ and payoff at time $T$ equal to
 \[  S(T) - x e^{rT} +d(0) e^{r T}. \]
@@ -88,8 +88,8 @@ where
 \end{align*}
 In the previous section, we derived the payoff functions for both classes of European options $f_c (x) = (x - K)^+$ and $f_p (x) = (K - x)^+$. Substituting into equation \ref{gprice} yields
 \begin{gather*}
-	P = e^{-rT} \EE(f_c(S(T))) =e^{-rT}  \EE((K - S(T))^+), \\
-	C = e^{-rT} \EE(f_p(S(T))) =  e^{-rT} \EE((S(T) - K)^+).
+	P = e^{-rT} \EE(f_p(S(T))) =e^{-rT}  \EE((K - S(T))^+), \\
+	C = e^{-rT} \EE(f_c(S(T))) =  e^{-rT} \EE((S(T) - K)^+).
 \end{gather*}
 Suppose the underlying pays no dividends, and thus $d(0)=0$. We can plug the new expressions for $C$ and $P$ into the put-call parity identity, yielding
 
